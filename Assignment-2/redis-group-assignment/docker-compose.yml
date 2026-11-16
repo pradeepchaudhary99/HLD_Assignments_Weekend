@@ -1,0 +1,15 @@
+# docker compose up -d      -> Redis on localhost:6379, RedisInsight (a GUI to SEE your keys) on http://localhost:5540
+# docker compose down       -> stop everything
+services:
+  redis:
+    image: redis:7.2-alpine
+    ports:
+      - "6379:6379"
+    # appendonly = persist every write to disk, so a restart doesn't wipe your data (see DESIGN.md Q2)
+    command: ["redis-server", "--appendonly", "yes"]
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    ports:
+      - "5540:5540"
+    # In RedisInsight: "Add Redis database" -> host: redis, port: 6379
